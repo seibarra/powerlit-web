@@ -15,7 +15,6 @@ export default defineNuxtConfig({
       })
     },
     '@nuxtjs/tailwindcss',
-    '@nuxt/icon',
     '@nuxtjs/color-mode',
     '@nuxt/image',
     '@vee-validate/nuxt'
