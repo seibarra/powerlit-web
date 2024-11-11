@@ -21,9 +21,10 @@
             </ul>
 
             <div class="flex justify-center items-center h-6 px-5">
-                    <v-btn color="primary" variant="text" class="text-none">
-                        <Icon name="fa-solid:user"
-                            class="w-6 h-6 transition-colors duration-300 ease-in-out hover:text-tahiti-800 text-center" />
+                    <v-btn icon color="primary" variant="tonal" class="text-none">
+                        <!--<Icon name="fa-solid:user"
+                            class="w-6 h-6 transition-colors duration-300 ease-in-out hover:text-tahiti-800 text-center" />-->
+                        <v-icon>mdi-account</v-icon>
                         <v-menu activator="parent">
                             <v-list>
                                 <v-list-item v-for="(item, index) in items" :key="index" :value="index">
