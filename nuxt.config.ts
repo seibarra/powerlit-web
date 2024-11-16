@@ -1,4 +1,5 @@
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   nitro: {
@@ -17,17 +18,15 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxtjs/color-mode',
     '@nuxt/image',
-    '@vee-validate/nuxt'
+    '@vee-validate/nuxt',
+    '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
+    '@nuxtjs/supabase'
   ],
-  colorMode: {
-    preference: 'light',
-    fallback: 'light', 
-    classSuffix: 'light',
-    storageKey: 'color-mode'
-  },
   build: {
     transpile: ['vuetify'],
   },
+  css: ['vuetify/styles'],
   vite: {
     vue: {
       template: {
@@ -35,4 +34,13 @@ export default defineNuxtConfig({
       },
     },
   },
+  colorMode: {
+    preference: 'light',
+    fallback: 'light', 
+    classSuffix: 'light',
+    storageKey: 'color-mode'
+  },
+  pinia: {
+    storesDirs: ['./stores/**'],
+  }
 })

@@ -12,3 +12,6 @@
 <NuxtLayout name="footer"></NuxtLayout>
 </template>
 
+<script setup lang="ts">
+const userStore = useUserStore()
+</script>
