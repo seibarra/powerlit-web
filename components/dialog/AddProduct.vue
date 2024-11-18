@@ -24,7 +24,6 @@
                                         </span>
                                     </v-list-item-title>
                                     <v-spacer></v-spacer>
-
                                     <v-btn size="small" variant="text" icon @click="deleteCategory(item.value)">
                                         <v-icon class="opacity-45">mdi-delete</v-icon>
                                     </v-btn>
@@ -104,10 +103,9 @@
 const supabase = useSupabaseClient()
 const userStore = useUserStore()
 const dialog = defineModel({ default: false, required: true })
+const emit = defineEmits(['onAddProduct'])
 const categories = ref<string[]>([])
 const tags = ref<string[]>([])
-const categoryAutocompleteRef = ref<any>(null)
-const tagAutocompleteRef = ref<any>(null)
 
 const name = ref('')
 const shortDescription = ref('')
@@ -220,10 +218,7 @@ async function addProduct() {
             createdAt: new Date().toISOString()
         }
     }
-
-    console.log('product: ', product)
     
-
     const { data, error } = await supabase.from('products').insert(product).select()
 
     if (error) {
@@ -233,14 +228,14 @@ async function addProduct() {
         loading.value = false
         return
     } else {
-        console.log('Producto creado', data)
-        
         await Promise.all(selectedTags.value.map(async (tag) => {
             await supabase.from('product_tags').insert({
                 productId: data[0].id,
                 tag: tag,                
             })
         }))
+        emit('onAddProduct', data[0])
+        dialog.value = false
     }
 
     loading.value = false

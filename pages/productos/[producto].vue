@@ -22,37 +22,8 @@
             <header class="mb-5 w-full border-b border-gray-500">
                 <h1 class="text-4xl p-3">Tanques de agua</h1>
             </header>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                <v-card 
-                v-for="item, index in waterTanks"
-                :key="index"
-                :class="index === 1 ? 'md:col-span-2 ambar' : 'md:col-span-1'"
-                class="d-flex flex-column"
-                link
-                >
-                <v-spacer></v-spacer>
-
-                <div class="w-full">
-                    <NuxtImg :src="item.image" class="m-auto h-[300px]"></NuxtImg>
-                </div>
-
-                <v-spacer></v-spacer>
-
-                    <v-card-title>
-                        {{ item.label }}
-                    </v-card-title>
-
-                    <v-card-subtitle>
-                        {{ item.description }}
-                    </v-card-subtitle>
-
-                    <v-card-actions >
-                        <v-btn color="orange" text="Ver más"></v-btn>
-
-                        <v-spacer></v-spacer>
-                    </v-card-actions>
-                </v-card>
-            </div>
+            
+            <ProductGrid :products="waterTanks" />
         </section>
         <section v-if="(!selectedChanged && route.params.producto === 'biodigestores') || (selectedChanged && selected === 1)">
             <header>
@@ -73,6 +44,8 @@
 </template>
 
 <script setup lang="ts">
+import { type Product } from '~/types/entities';
+const supabase = useSupabaseClient()
 const items = [
     { label: 'Tanques de agua',
         id: 'tanques-de-agua',
@@ -92,28 +65,7 @@ const items = [
      }
 ]
 
-const waterTanks = ref([
-    { label: 'Tanque de agua tricapa 470 litros',
-    description: 'Tanque de agua tricapa 470 litros',
-    image: '/images/tanques/tanque_470_tricapa.webp' },
-    { label: 'Tanque de agua 1000 cuatricapa',
-    description: 'Tanque de agua 1000 cuatricapa',
-    image: '/images/tanques/tanque_1000_cuatricapa.webp' },
-    { label: 'Tanque de agua 750 bicapa',
-    image: '/images/tanques/tanque_750_bicapa.webp' },
-    { label: 'Tanque de agua 4',
-    image: '/images/tanques/tanque_470_tricapa.webp' },
-    { label: 'Tanque de agua tricapa 470 litros',
-    description: 'Tanque de agua tricapa 470 litros',
-    image: '/images/tanques/tanque_470_tricapa.webp' },
-    { label: 'Tanque de agua 1000 cuatricapa',
-    description: 'Tanque de agua 1000 cuatricapa',
-    image: '/images/tanques/tanque_1000_cuatricapa.webp' },
-    { label: 'Tanque de agua 750 bicapa',
-    image: '/images/tanques/tanque_750_bicapa.webp' },
-    { label: 'Tanque de agua 4',
-    image: '/images/tanques/tanque_470_tricapa.webp' },
-])
+const waterTanks = ref<Product[]>([])
 
 const route = useRoute()
 const selected = ref(items.findIndex(item => item.id === route.params.producto) || 0)
@@ -122,6 +74,18 @@ const selectedChanged = ref(false)
 function editParam(param: string) {
     history.pushState({}, '', '/productos/' + param)
 }
+
+onMounted(async () => {
+    if (route.params.producto === 'tanques-de-agua') {
+        const { data, error } = await supabase.from('products').select('*').eq('category', 'Tanques de agua').order('capacity').limit(15)
+        if (error) {
+            console.log('error: ', error)
+        }
+        else {
+            waterTanks.value = data
+        } 
+    }
+})
 
 watch(selected, () => {
     editParam(items[selected.value].id)
