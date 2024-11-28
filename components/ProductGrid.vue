@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 p-5">
         <v-card 
         v-for="product, index in products"
         :key="index"
@@ -7,18 +7,13 @@
         link
         @click="navigateTo(`/productos/${product.id}`)"
         >
-            <v-spacer></v-spacer>
-
-            <div class="w-full">
-                <NuxtImg :src="product.imagesURLs[0]" class="m-auto h-[300px] w-[250px]"></NuxtImg>
+            <div class="aspect-square flex justify-center items-center">
+                <NuxtImg :src="product.imagesURLs[0]" class="m-auto max-w-[100%] max-h-[100%]"></NuxtImg>
             </div>
 
-            <v-spacer></v-spacer>
-
-            <v-card-title class="pb-0">
+            <v-card-title class="pb-0 text-wrap">
                 {{ product.name }}
             </v-card-title>
-            
             
             <v-card-subtitle v-if="product.shortDescription">
                 {{ product.shortDescription }}
@@ -26,10 +21,11 @@
             
             <strong v-if="product.price" class="text-xl ml-5 pt-3">${{ product.price.toLocaleString('es-ES') }}</strong>
 
-            <v-card-actions >
-                <v-btn color="#ffebc9ee" text="Ver más"></v-btn>
+            <v-spacer/>
 
-                <v-spacer></v-spacer>
+            <v-card-actions >
+                <v-spacer/>
+                <v-btn color="orange" variant="tonal">Ver más</v-btn>
             </v-card-actions>
         </v-card>
     </div>

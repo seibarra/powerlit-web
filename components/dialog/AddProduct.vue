@@ -23,7 +23,7 @@
                                             {{ item.value }}
                                         </span>
                                     </v-list-item-title>
-                                    <v-spacer></v-spacer>
+                                    <v-spacer/>
                                     <v-btn size="small" variant="text" icon @click="deleteCategory(item.value)">
                                         <v-icon class="opacity-45">mdi-delete</v-icon>
                                     </v-btn>
@@ -49,7 +49,7 @@
                                             {{ item.value }}
                                         </span>
                                     </v-list-item-title>
-                                    <v-spacer></v-spacer>
+                                    <v-spacer/>
 
                                     <v-btn size="small" variant="text" icon @click="deleteTag(item.value)">
                                         <v-icon class="opacity-45">mdi-delete</v-icon>
@@ -85,11 +85,11 @@
 
                 <v-divider></v-divider>
 
-                <v-card-actions>
+                <v-card-actions class="ma-3 mt-0">
                     <v-btn text="Cerrar" variant="plain" @click="dialog = false"
                         class="text-none font-weight-regular"></v-btn>
 
-                    <v-spacer></v-spacer>
+                    <v-spacer/>
 
                     <v-btn color="green" text="Crear producto" variant="tonal" @click="addProduct"
                         class="text-none font-weight-regular" :loading="loading"></v-btn>

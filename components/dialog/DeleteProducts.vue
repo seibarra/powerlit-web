@@ -26,7 +26,7 @@
             width="90"
           ></v-btn>
 
-          <v-spacer></v-spacer>
+          <v-spacer/>
 
           <v-btn
             class="ms-auto text-none"

@@ -47,7 +47,7 @@
           class="text-none font-weight-regular"
           ></v-btn>
           
-          <v-spacer></v-spacer>
+          <v-spacer/>
 
           <v-btn
             color="green"

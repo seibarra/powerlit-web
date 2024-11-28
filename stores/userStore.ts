@@ -13,7 +13,7 @@ export const useUserStore = defineStore('userStore', () => {
         const supabase = useSupabaseClient()
         const response = await supabase.auth.getUser()
         if (response.data && response.data.user) {
-            const { data, error } = await supabase.from('users').select('*').eq('uid', response.data.user.id).single()
+            const { data, error } = await supabase.from('users').select().eq('uid', response.data.user.id).single()
             if (error) {
                 console.log('error on get user:', error)
             } else {

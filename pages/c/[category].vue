@@ -25,21 +25,6 @@
             
             <ProductGrid :products="waterTanks" />
         </section>
-        <section v-if="(!selectedChanged && route.params.category === 'biodigestores') || (selectedChanged && selected === 1)">
-            <header>
-                <h1 class="text-4xl p-3">Biodigestores</h1>
-            </header>
-        </section>
-        <section v-if="(!selectedChanged && route.params.category === 'camaras-septicas') || (selectedChanged && selected === 2)">
-            <header>
-                <h1 class="text-4xl p-3">Cámaras sépticas</h1>
-            </header>
-        </section>
-        <section v-if="(!selectedChanged && route.params.category === 'accesorios') || (selectedChanged && selected === 3)">
-            <header>
-                <h1 class="text-4xl p-3">Accesorios</h1>
-            </header>
-        </section>
     </section>
 </template>
 
@@ -72,12 +57,14 @@ function editParam(param: string) {
 }
 
 onMounted(async () => {
-    if (route.params.producto === 'tanques-de-agua') {
-        const { data, error } = await supabase.from('products').select('*').eq('category', 'Tanques de agua').order('capacity').limit(15)
+    if (route.params.category === 'tanques-de-agua') {
+        const { data, error } = await supabase.from('products').select().eq('category', 'Tanque de agua').order('capacity')
         if (error) {
             console.log('error: ', error)
         }
         else {
+            console.log('data: ', data)
+            
             waterTanks.value = data
         } 
     }
