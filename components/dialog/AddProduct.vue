@@ -4,8 +4,8 @@
             <v-card prepend-icon="mdi-account" title="Agregar producto">
                 <v-card-text>
                     <v-text-field label="Nombre" required v-model="name"></v-text-field>
-                    <v-text-field label="Descripción corta" v-model="shortDescription"></v-text-field>
-                    <v-text-field label="Descripción" v-model="description"></v-text-field>
+                    <v-textarea label="Descripción corta" v-model="shortDescription" auto-grow rows="2"></v-textarea>
+                    <v-textarea label="Descripción" v-model="description" auto-grow rows="2"></v-textarea>
                     <v-combobox label="Categoría" :items="categories" chips
                         v-model="selectedCategory">
                         <template v-slot:no-data>
