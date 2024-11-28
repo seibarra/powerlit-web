@@ -1,11 +1,14 @@
 <template>
     <section class="max-w-[900px] min-w-full">
-        <header class="flex justify-between items-center">
-            <h2 class="text-2xl font-bold px-5 pb-7">Productos</h2>
-        </header>
-        <div class="w-full">
+        <header class="flex gap-5 items-center pb-7">
+            <div>
+                <h2 class="text-2xl font-bold px-5">Productos</h2>
+            </div>
+
             <v-btn color="green" text="Agregar producto" variant="tonal" @click="showAddProductDialog = true"
                 class="text-none font-weight-regular m-3"></v-btn>
+        </header>
+        <div class="w-full">
             <div class="flex flex-wrap gap-5">
                 <v-text-field
                     label="Buscar producto"

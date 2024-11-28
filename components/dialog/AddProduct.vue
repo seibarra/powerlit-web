@@ -149,6 +149,7 @@ async function createCategory() {
         categories.value.push(selectedCategory.value)
         await supabase.from('product_categories').insert({
             name: selectedCategory.value,
+            path: selectedCategory.value.toLowerCase().replaceAll(' ', '-')
         })
     }
 }
