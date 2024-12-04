@@ -32,7 +32,6 @@
 <script setup lang="ts">
 import type { Product, ProductTag } from '~/types/entities'
 const showAddProductDialog = ref(false)
-const userStore = useUserStore()
 const supabase = useSupabaseClient()
 const products = ref<Product[]>([])
 const tags = ref<string[]>([])

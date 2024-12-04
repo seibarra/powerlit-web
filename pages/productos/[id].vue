@@ -13,8 +13,10 @@
                 <div class="flex flex-col items-end mt-5">
                     <div>
                         <div class="text-xl w-min mx-auto">${{ formatPrice(product.price ?? 0) }}</div>
-                        <button class="mt-4 text-xl text-center float-end text-white bg-blue-500 rounded-md hover:bg-blue-700 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium w-full sm:w-auto px-5 py-2.5">
-                            Comprar
+                        <button 
+                        @click="userStore.addToCart(product.id, 1)"
+                        class="mt-4 text-xl text-center float-end text-white bg-blue-500 rounded-md hover:bg-blue-700 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium w-full sm:w-auto px-5 py-2.5">
+                            Agregar al carrito
                         </button>
                     </div>
                 </div>
@@ -37,6 +39,7 @@
 import { type Product } from '~/types/entities'
 const supabase = useSupabaseClient()
 const route = useRoute()
+const userStore = useUserStore()
 const product = ref<Product>()
 const productId = ref(route.params.id)
 const selectedImage = ref(0)

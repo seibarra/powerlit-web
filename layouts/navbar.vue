@@ -23,8 +23,8 @@
                     </li>
                 </ul>
 
-                <div class="flex justify-center items-center h-6 px-5">
-                    <v-btn icon color="#333" variant="tonal" class="text-none">
+                <div class="flex gap-5 justify-center items-center h-6 px-5">
+                    <v-btn icon color="primary" variant="tonal" class="text-none">
                         <v-icon>mdi-account</v-icon>
                         <v-menu activator="parent">
                             <v-list v-if="userStore.user">
@@ -52,6 +52,8 @@
                             </v-list>
                         </v-menu>
                     </v-btn>
+
+                    <MenuCart v-if="userStore.cart.length > 0"/>
                 </div>
             </div>
         </nav>

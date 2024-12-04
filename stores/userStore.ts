@@ -1,9 +1,10 @@
-import { defineStore } from 'pinia'
 import { piniaPluginPersistedstate } from '#imports'
-import type User from '~/models/user'
+import type { User } from '~/types/entities'
 
 export const useUserStore = defineStore('userStore', () => {
-    const user = ref<User | null>(null)    
+    const user = ref<User | null>(null)
+    const cart = ref<{ productId: number, quantity: number }[]>([])
+    const cartModel = ref(false)
 
     function setUser(newUser: User) {
         user.value = newUser
@@ -29,10 +30,39 @@ export const useUserStore = defineStore('userStore', () => {
         navigateTo('/login')
     }
 
+    function addToCart(productId: number, quantity: number) {
+        const index = cart.value.findIndex((item) => item.productId === productId)
+        if (index === -1) {
+            cart.value.push({ productId, quantity })
+        } else {
+            cart.value[index].quantity += quantity
+        }
+        cartModel.value = true
+    }
+
+    function removeFromCart(productId: number) {
+        const index = cart.value.findIndex((item) => item.productId === productId)
+        if (index !== -1) {
+            cart.value.splice(index, 1)
+        }
+    }
+
+    function setQuantity(productId: number, quantity: number) {
+        const index = cart.value.findIndex((item) => item.productId === productId)
+        if (index !== -1) {
+            cart.value[index].quantity = quantity
+        }
+    }
+
     return {
         user,
         logout,
-        setUser
+        setUser,
+        cart,
+        cartModel,
+        addToCart,
+        removeFromCart,
+        setQuantity
     }
 }, 
 {

@@ -126,7 +126,7 @@ const filesSize = computed(() => Math.round(images.value.reduce((acc, file) => a
 onMounted(async () => {
     loadingData.value = true
     try {
-        const { data, error } = await supabase.from('product_categories').select('*')
+        const { data, error } = await supabase.from('product_categories').select()
         if (!error) {
             categories.value = data.map((item) => item.name)
         }
@@ -135,7 +135,7 @@ onMounted(async () => {
     }
 
     try {
-        const { data, error } = await supabase.from('tags').select('*')
+        const { data, error } = await supabase.from('tags').select()
         if (!error) {
             tags.value = data.map((item) => item.name)
         }
@@ -189,12 +189,11 @@ async function addProduct() {
     if (loading.value) return
     loading.value = true
 
-    await createCategory()
-    if (selectedTags.value.length > 0)
-        await createTags()
-
-    const imagePaths = await Promise.all(images.value.map(async (image) => {
-        const { data, error } = await supabase.storage.from('products').upload(`${new Date().getTime()}_${image.name}`, image)
+    const imagePaths = await Promise.all(images.value.map(async (image, index) => {
+        const fileName = `image_${new Date().getTime()}${index}`
+        console.log(fileName)
+        
+        const { data, error } = await supabase.storage.from('products').upload(fileName, image)
         if (!error) {
             return data.path
         } else {
@@ -203,6 +202,11 @@ async function addProduct() {
     }))
 
     const imageURLs = imagePaths.map((path) => supabase.storage.from('products').getPublicUrl(path).data.publicUrl)
+
+    await createCategory()
+    if (selectedTags.value.length > 0)
+        await createTags()
+
 
     const product = {
         name: name.value,
@@ -232,14 +236,12 @@ async function addProduct() {
         await Promise.all(selectedTags.value.map(async (tag) => {
             await supabase.from('product_tags').insert({
                 productId: data[0].id,
-                tag: tag,                
+                tag,
             })
         }))
         emit('onAddProduct', data[0])
         dialog.value = false
     }
-
     loading.value = false
 }
-
 </script>
