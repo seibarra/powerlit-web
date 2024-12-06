@@ -1,4 +1,3 @@
-import { piniaPluginPersistedstate } from '#imports'
 import type { Product, ProductCategory } from '~/types/entities'
 
 export const useProductsStore = defineStore('productsStore', () => {
@@ -30,18 +29,15 @@ export const useProductsStore = defineStore('productsStore', () => {
         }
     }
 
+    async function updateProduct(product: Product) {
+        const supabase = useSupabaseClient()
+        const { error } = await supabase.from('products').update(product).eq('id', product.id)
+    }
+
     return {
         products,
-        productCategories
+        productCategories,
+        updateProduct
     }
-}, 
-{
-    persist: {
-        storage: piniaPluginPersistedstate.cookies({
-            sameSite: 'lax',
-            maxAge: 60 * 60 * 24 * 30, // 30 days
-        })
-    }
-}
-)
+})
 

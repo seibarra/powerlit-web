@@ -1,14 +1,11 @@
 import { piniaPluginPersistedstate } from '#imports'
-import type { User } from '~/types/entities'
+import type { User, Address } from '~/types/entities'
 
 export const useUserStore = defineStore('userStore', () => {
     const user = ref<User | null>(null)
     const cart = ref<{ productId: number, quantity: number }[]>([])
+    const addresses = ref<Address[]>([])
     const cartModel = ref(false)
-
-    function setUser(newUser: User) {
-        user.value = newUser
-    }
 
     onMounted(async () => {
         const supabase = useSupabaseClient()
@@ -21,6 +18,8 @@ export const useUserStore = defineStore('userStore', () => {
                 user.value = data as User
             }
         }
+
+        getAddresses()
     })
 
     function logout() {
@@ -28,6 +27,48 @@ export const useUserStore = defineStore('userStore', () => {
         supabase.auth.signOut()
         user.value = null
         navigateTo('/login')
+    }
+
+    async function getAddresses() {
+        const supabase = useSupabaseClient()
+        if (!user.value) return
+        const { data, error } = await supabase.from('addresses').select().eq('uid', user.value.uid)
+        if (error) {
+            console.log('error:', error)
+        } else {
+            addresses.value = data as Address[]
+        }
+    }
+
+    function addEmptyAddress() {
+        if (!user.value) return
+        addresses.value.push({
+            uid: user.value.uid,
+            province: '',
+            city: '',
+            zip: '',
+            street: '',
+            id: undefined
+        })
+    }
+
+    async function saveAddress(addressIndex: number) {
+        const supabase = useSupabaseClient()
+        if (!user.value) return
+        if (addresses.value[addressIndex].id) {
+            const { error } = await supabase.from('addresses').upsert(addresses.value[addressIndex]).eq('id', addresses.value[addressIndex].id)
+            if (error) {
+                console.log('error:', error)
+            }
+        } else {
+            const { data, error } = await supabase.from('addresses').insert(addresses.value[addressIndex])
+            .eq('uid', user.value.uid).select().single()
+            if (error) {
+                console.log('error:', error)
+            } else {
+                addresses.value[addressIndex].id = data?.id
+            }
+        }
     }
 
     function addToCart(productId: number, quantity: number) {
@@ -57,12 +98,14 @@ export const useUserStore = defineStore('userStore', () => {
     return {
         user,
         logout,
-        setUser,
         cart,
         cartModel,
         addToCart,
         removeFromCart,
-        setQuantity
+        setQuantity,
+        addresses,
+        addEmptyAddress,
+        saveAddress
     }
 }, 
 {

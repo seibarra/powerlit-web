@@ -63,7 +63,7 @@ function handleClickCard(product: Product) {
       selected.value.push(product.id)
     }
   } else {
-    navigateTo(`/productos/${product.id}`)
+    navigateTo(`/productos/edit/${product.id}`)
   }
 }
 

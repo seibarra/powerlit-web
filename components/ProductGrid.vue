@@ -5,7 +5,7 @@
         :key="index"
         class="d-flex flex-column"
         link
-        @click="navigateTo(`/productos/${product.id}`)"
+        @click="handleClickCard(product)"
         >
             <div class="aspect-square flex justify-center items-center">
                 <NuxtImg :src="product.imagesURLs[0]" class="m-auto max-w-[100%] max-h-[100%]"></NuxtImg>
@@ -18,15 +18,10 @@
             <v-card-subtitle v-if="product.shortDescription">
                 {{ product.shortDescription }}
             </v-card-subtitle>
+
+            <v-spacer></v-spacer>
             
-            <strong v-if="product.price" class="text-xl ml-5 pt-3">${{ product.price.toLocaleString('es-ES') }}</strong>
-
-            <v-spacer/>
-
-            <v-card-actions >
-                <v-spacer/>
-                <v-btn color="orange" variant="tonal">Ver más</v-btn>
-            </v-card-actions>
+            <strong v-if="product.price" class="text-xl p-5" style="align-self: flex-end;">${{ product.price.toLocaleString('es-ES') }}</strong>
         </v-card>
     </div>
 </template>
@@ -39,4 +34,10 @@ defineProps({
         required: true
     }
 })
+
+function handleClickCard(product: Product) {
+    console.log('product', product)
+    
+    navigateTo(`/productos/${product.id}`)
+}
 </script>

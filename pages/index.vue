@@ -6,10 +6,6 @@
 -->
 
     <section class="max-w-[1366px] mx-auto sm:px-6 max-sm:px-4">
-        <header>
-            <h1 class="text-h2 p-5">Productos Powerlit</h1>
-        </header>
-
         <section class="my-8">
             
             <v-card class="w-full image-background" rounded="xl">

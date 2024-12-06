@@ -5,3 +5,4 @@ export type Product = Tables<'products'>
 export type ProductCategory = Tables<'product_categories'>
 export type ProductTag = Tables<'product_tags'>
 export type Tag = Tables<'tags'>
+export type Address = Tables<'addresses'>
