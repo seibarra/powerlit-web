@@ -1,20 +1,19 @@
 <!-- Bento grid de tanques de agua -->
 <template>
     <section>
-        <header class="absolute top-0 left-0 w-full h-full z-10">
-            <v-card>
+        <header>
+            <v-card elevation="1">
                 <v-tabs show-arrows v-model="selected" align-tabs="center" class="tabs">
                     <v-tab v-for="category, index in productCategories" :key="index" :text="category.name" size="medium"
                         class="text-none px-5">
                         <div>
                             <p class="my-5">{{ category.name }}</p>
-                            <NuxtImg v-if="category.imageURL" :src="category.imageURL" class="m-auto h-20"></NuxtImg>
+                            <NuxtImg v-if="category.imageURL" :src="category.imageURL" class="m-auto h-20" width="50" :alt="category.name" />
                         </div>
                     </v-tab>
                 </v-tabs>
             </v-card>
         </header>
-        <div class="h-10"></div>
         <section 
             class="md:px-6 sm:px-2"
             v-if="productCategories.length > 0"
@@ -52,10 +51,6 @@ watch(selected, () => {
 
 <style scoped>
 .tabs {
-    transition: all 0.3s ease-in-out;
-}
-
-.v-tabs:hover {
     height: 145px !important;
 }
 

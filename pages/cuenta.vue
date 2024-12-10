@@ -33,19 +33,28 @@
         </div>
 
         <div class="p-6 h-full w-full flex justify-center">
-            <AccountSettings v-if="selected === 'account'"/>
-            <AccountPurchases v-if="selected === 'purchases'"/>
-            <AccountSales v-if="selected === 'sales'"/>
-            <AccountProducts v-if="selected === 'products'"/>
-            <AccountUsers v-if="selected === 'users'"/>
-            <AccountAllUsers v-if="selected === 'all-users'"/>
+            <AccountSettings v-if="selected === 'cuenta'"/>
+            <AccountPurchases v-if="selected === 'compras'"/>
+            <AccountSales v-if="selected === 'ventas'"/>
+            <AccountProducts v-if="selected === 'productos'"/>
+            <AccountUsers v-if="selected === 'usuarios'"/>
+            <AccountAllUsers v-if="selected === 'todos-los-usuarios'"/>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-const selected = ref('account')
+const selected = ref('cuenta')
 const openDrawer = ref(true)
+const queryStrings = ['cuenta', 'compras', 'ventas', 'productos', 'usuarios', 'todos-los-usuarios']
+onMounted(() => {
+    const route = useRoute()
+    if (route.query && queryStrings.includes(route.query.tab as string)) {
+        selected.value = route.query.tab as string
+    } else {
+        history.pushState({}, '', '/cuenta?tab='+selected.value)
+    }
+})
 </script>
 
 <style scoped>

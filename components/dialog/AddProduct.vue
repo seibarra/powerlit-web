@@ -1,7 +1,7 @@
 <template>
     <div class="pa-4 text-center">
         <v-dialog v-model="dialog" max-width="600">
-            <v-card prepend-icon="mdi-account" title="Agregar producto">
+            <v-card title="Agregar producto">
                 <v-card-text>
                     <v-text-field label="Nombre" required v-model="name"></v-text-field>
                     <v-textarea label="Descripción corta" v-model="shortDescription" auto-grow rows="2"></v-textarea>
@@ -61,6 +61,9 @@
                     <v-text-field label="Precio" required type="number" v-model="price"></v-text-field>
                     <v-text-field label="Capacidad" type="number" v-model="capacity"></v-text-field>
 
+                    <menu-image-selector></menu-image-selector>
+
+                    
                     <v-file-input v-model="images" :show-size="1000" color="deep-purple-accent-4"
                         label="Imágenes del producto" placeholder="Selecciona las imágenes del producto"
                         prepend-icon="mdi-camera" variant="outlined" counter multiple>
@@ -79,9 +82,13 @@
                             <span>{{ images.length }} imágenes seleccionadas ({{ filesSize }} KB)</span>
                         </template>
                     </v-file-input>
-
+                    
                     <small v-if="errorMessage" class="text-red-500">{{ errorMessage }}</small>
                 </v-card-text>
+
+                <button @click="testFunction(images)">
+                    Test
+                </button>
 
                 <v-divider></v-divider>
 
@@ -143,6 +150,39 @@ onMounted(async () => {
         console.log(error)
     }
 })
+
+async function testFunction(images: File[]) {
+    const formData = new FormData()
+    images.forEach((image) => formData.append('images', image))
+    try {
+        const response = await fetch('http://localhost:3433/upload', {
+            method: 'POST',
+            body: formData
+        })
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.log(errorText);
+          return;
+        }
+
+        // Receive the ZIP file as a Blob
+        const blob = await response.blob();
+        
+        console.log(blob.size / 1024, 'KB');
+        
+        // download the file
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'product.zip';
+        a.click();
+        URL.revokeObjectURL(url);
+
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 async function createCategory() {
     if (selectedCategory.value && !categories.value.includes(selectedCategory.value)) {

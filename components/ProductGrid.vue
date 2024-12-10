@@ -21,7 +21,9 @@
 
             <v-spacer></v-spacer>
             
-            <strong v-if="product.price" class="text-xl p-5" style="align-self: flex-end;">${{ product.price.toLocaleString('es-ES') }}</strong>
+            <v-card-actions>
+                <strong v-if="product.price" class="text-xl p-5">${{ product.price.toLocaleString('es-ES') }}</strong>
+            </v-card-actions>
         </v-card>
     </div>
 </template>
