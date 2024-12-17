@@ -3,27 +3,27 @@
         <div class="flex">
             <div :class="openDrawer ? 'open-drawer' : 'closed-drawer'" class="whitespace-nowrap max-sm:absolute md:max-w-[235px] bg-white border-r-2 border-gray-200 shadow-[5px_2px_10px_-2px_rgba(0,0,0,0.10)] z-10">
                 <ul class="flex flex-col p-3">
-                    <li @click="selected = 'account'" class="text-lg text-gray-700 hover:bg-slate-400 hover:bg-opacity-20 p-3 pl-5 cursor-pointer">
+                    <li @click="handleClickTab('cuenta')" class="text-lg text-gray-700 hover:bg-slate-400 hover:bg-opacity-20 p-3 pl-5 cursor-pointer">
                         Cuenta
                     </li>
 
-                    <li @click="selected = 'purchases'" class="text-lg text-gray-700 hover:bg-slate-400 hover:bg-opacity-20 p-3 pl-5 cursor-pointer">
+                    <li @click="handleClickTab('compras')" class="text-lg text-gray-700 hover:bg-slate-400 hover:bg-opacity-20 p-3 pl-5 cursor-pointer">
                         Compras
                     </li>
                     
-                    <li @click="selected = 'sales'" class="text-lg text-gray-700 hover:bg-slate-400 hover:bg-opacity-20 p-3 pl-5 cursor-pointer">
+                    <li @click="handleClickTab('ventas')" class="text-lg text-gray-700 hover:bg-slate-400 hover:bg-opacity-20 p-3 pl-5 cursor-pointer">
                         Ventas
                     </li>
 
-                    <li @click="selected = 'products'" class="text-lg text-gray-700 hover:bg-slate-400 hover:bg-opacity-20 p-3 pl-5 cursor-pointer">
+                    <li @click="handleClickTab('productos')" class="text-lg text-gray-700 hover:bg-slate-400 hover:bg-opacity-20 p-3 pl-5 cursor-pointer">
                         Productos
                     </li>
 
-                    <li @click="selected = 'users'" class="text-lg text-gray-700 hover:bg-slate-400 hover:bg-opacity-20 p-3 pl-5 cursor-pointer">
+                    <li @click="handleClickTab('usuarios')" class="text-lg text-gray-700 hover:bg-slate-400 hover:bg-opacity-20 p-3 pl-5 cursor-pointer">
                         Usuarios
                     </li>
 
-                    <li @click="selected = 'all-users'" class="text-lg text-gray-700 hover:bg-slate-400 hover:bg-opacity-20 p-3 pl-5 cursor-pointer">
+                    <li @click="handleClickTab('todos-los-usuarios')" class="text-lg text-gray-700 hover:bg-slate-400 hover:bg-opacity-20 p-3 pl-5 cursor-pointer">
                         Todos los usuarios
                     </li>
                 </ul>
@@ -44,17 +44,22 @@
 </template>
 
 <script setup lang="ts">
-const selected = ref('cuenta')
+const route = useRoute()
+const selected = ref(route.query.tab ?? 'cuenta')
 const openDrawer = ref(true)
 const queryStrings = ['cuenta', 'compras', 'ventas', 'productos', 'usuarios', 'todos-los-usuarios']
 onMounted(() => {
-    const route = useRoute()
     if (route.query && queryStrings.includes(route.query.tab as string)) {
         selected.value = route.query.tab as string
     } else {
         history.pushState({}, '', '/cuenta?tab='+selected.value)
     }
 })
+
+function handleClickTab(tab: string) {
+    selected.value = tab
+    history.pushState({}, '', `/cuenta?tab=${tab}`)
+}
 </script>
 
 <style scoped>

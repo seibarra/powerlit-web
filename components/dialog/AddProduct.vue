@@ -85,11 +85,6 @@
                     
                     <small v-if="errorMessage" class="text-red-500">{{ errorMessage }}</small>
                 </v-card-text>
-
-                <button @click="testFunction(images)">
-                    Test
-                </button>
-
                 <v-divider></v-divider>
 
                 <v-card-actions class="ma-3 mt-0">
@@ -151,39 +146,6 @@ onMounted(async () => {
     }
 })
 
-async function testFunction(images: File[]) {
-    const formData = new FormData()
-    images.forEach((image) => formData.append('images', image))
-    try {
-        const response = await fetch('http://localhost:3433/upload', {
-            method: 'POST',
-            body: formData
-        })
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.log(errorText);
-          return;
-        }
-
-        // Receive the ZIP file as a Blob
-        const blob = await response.blob();
-        
-        console.log(blob.size / 1024, 'KB');
-        
-        // download the file
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'product.zip';
-        a.click();
-        URL.revokeObjectURL(url);
-
-    } catch (error) {
-        console.log(error)
-    }
-}
-
 async function createCategory() {
     if (selectedCategory.value && !categories.value.includes(selectedCategory.value)) {
         categories.value.push(selectedCategory.value)
@@ -225,11 +187,8 @@ async function deleteTag(name: string) {
     }
 }
 
-async function addProduct() {
-    if (loading.value) return
-    loading.value = true
-
-    const imagePaths = await Promise.all(images.value.map(async (image, index) => {
+async function uploadImages() {
+    return await Promise.all(images.value.map(async (image, index) => {
         const fileName = `image_${new Date().getTime()}${index}`
         console.log(fileName)
         
@@ -240,7 +199,14 @@ async function addProduct() {
             return ''
         }
     }))
+}
 
+async function addProduct() {
+    if (loading.value) return
+    loading.value = true
+
+    const imagePaths = await uploadImages()
+    
     const imageURLs = imagePaths.map((path) => supabase.storage.from('products').getPublicUrl(path).data.publicUrl)
 
     await createCategory()

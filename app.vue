@@ -1,12 +1,10 @@
 <template>
   <NuxtLayout name="navbar"></NuxtLayout>
 
-  <main class="w-full flex justify-center">
-    <div class="flex flex-col max-w-[1920px] w-full">
-      <v-app>
+  <main class="w-screen">
+      <v-app class="flex flex-col max-w-[1920px] w-full items-center">
         <NuxtPage />
       </v-app>
-    </div>
   </main>
 
 <NuxtLayout name="footer"></NuxtLayout>

@@ -1,6 +1,6 @@
 <template>
-    <div class="flex items-center justify-center mt-10">
-      <section class="w-full max-w-md p-8 bg-white rounded-lg shadow-xl">
+    <div class="mt-10">
+      <section class="w-full mx-auto p-8 bg-white rounded-lg shadow-xl">
         <header>
             <h2 class="text-2xl font-bold text-center text-gray-700">Iniciar sesión</h2>
         </header>

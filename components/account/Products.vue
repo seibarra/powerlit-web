@@ -7,6 +7,9 @@
 
             <v-btn color="green" text="Agregar producto" variant="tonal" @click="showAddProductDialog = true"
                 class="text-none font-weight-regular m-3"></v-btn>
+
+            <v-btn color="green" text="Agregar categoría" variant="tonal" @click="showAddCategoryDialog = true"
+                class="text-none font-weight-regular m-3"></v-btn>
         </header>
         <div class="w-full">
             <div class="flex flex-wrap gap-5">
@@ -26,19 +29,19 @@
             <LocalProductList :products="productsFiltered" :cardSize="cardSize" @onDeleteProducts="deleteSelectedProducts" :loading="loadingProducts" />
         </div>
         <DialogAddProduct v-model="showAddProductDialog" @onAddProduct="pushProduct" />
+        <DialogAddCategory v-model="showAddCategoryDialog" @onAddCategory="pushCategory" />
     </section>
 </template>
 
 <script setup lang="ts">
-import type { Product, ProductTag } from '~/types/entities'
+import type { Product, ProductCategory, ProductTag } from '~/types/entities'
 const showAddProductDialog = ref(false)
+const showAddCategoryDialog = ref(false)
 const supabase = useSupabaseClient()
 const products = ref<Product[]>([])
 const tags = ref<string[]>([])
 const productTags = ref<ProductTag[]>([])
 const loadingProducts = ref(false)
-
-
 const cardSize = ref(200)
 
 // filters
@@ -75,6 +78,10 @@ function searchProduct(value: string) {
 
 function pushProduct(product: Product) {
     products.value.push(product)
+}
+
+function pushCategory(category: ProductCategory) {
+    categories.value.push(category.name)
 }
 
 async function handleCategoryUpdate(value: string[]) {

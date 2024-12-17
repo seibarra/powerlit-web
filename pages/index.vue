@@ -1,17 +1,15 @@
-<template>    
-<!--
+<template>
     <div class="w-full">
-        <video src="/portada-powerlit.webm" autoplay muted class="mx-auto" width="1366"></video>
+        <video src="/portada-powerlit.webm" autoplay muted width="100%"></video>
     </div>
--->
 
-    <section class="max-w-[1366px] mx-auto sm:px-6 max-sm:px-4">
+    <section class="max-xl:max-w-[100vw] lg:max-w-[1366px] mx-auto sm:px-6 max-sm:px-4">
         <section class="my-8">
             
-            <v-card class="w-full image-background" rounded="xl">
+            <v-card class="image-background" rounded="xl">
                 <h1 class="text-4xl p-6">Tanques de agua</h1>
                 
-                <div class="w-full flex p-6 gap-6">
+                <div class="w-full flex p-6 gap-6 max-sm:flex-col">
                     <v-btn class="text-none " color="#ffebc9ee" @click="model = 0">
                         Bicapa
                     </v-btn>
@@ -55,10 +53,10 @@
         </section>
 
         <section class="my-8">
-            <v-card class="w-full image-background-2" rounded="xl">
+            <v-card class="image-background-2" rounded="xl">
                 <h1 class="text-4xl p-6">Biodigestores</h1>
                 
-                <div class="w-full flex p-6 gap-6">
+                <div class="w-full flex p-6 gap-6 max-sm:flex-col">
                     <v-btn class="text-none " color="#ffebc9ee" @click="model2 = 0">
                         Biodigestor
                     </v-btn>
@@ -98,7 +96,7 @@
 
     <section class="my-8">
             
-            <v-card class="w-full image-background" rounded="xl">
+            <v-card class="image-background" rounded="xl" >
                 <h1 class="text-4xl p-6">Cámaras sépticas</h1>
                 
                 <div class="w-full flex p-6 gap-6">
@@ -112,7 +110,7 @@
                     <div class="max-w-[550px] w-full">
                         <NuxtImg src="/images/productos_powerlit/camaras_septicas/camara_septica_550.avif" height="530" width="530" class="mx-auto"></NuxtImg>
                     </div>
-                <div class="w-full h-[250px] sm:border-l-8 sm:border-slate-500 pl-5">
+                <div class="w-full sm:border-l-8 sm:border-slate-500 pl-5">
                     <h2 class="text-2xl font-bold w-fit pb-1 px-2 m-3 border-b-2 border-slate-500">Cámara séptica</h2>
                     <div class="m-3">
                         <p class="text-lg">Producto reforzado, liviano y durable.</p>

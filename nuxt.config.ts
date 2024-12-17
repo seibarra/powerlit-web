@@ -8,11 +8,6 @@ export default defineNuxtConfig({
       supabaseKey: process.env.SUPABASE_KEY
     }
   },
-  nitro: {
-    prerender: {
-      autoSubfolderIndex: false
-    }
-  },
   devtools: { enabled: true },
   modules: [
     (_options, nuxt) => {
@@ -52,5 +47,13 @@ export default defineNuxtConfig({
   image: {
     format: ['avif', 'webp'],
     quality: 80
+  },
+  supabase: {
+    redirectOptions: {
+      login: '/login',
+      callback: '/',
+      include: ['/cuenta'],
+      cookieRedirect: false,
+    }
   }
 })
