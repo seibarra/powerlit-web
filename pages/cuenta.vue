@@ -1,5 +1,5 @@
 <template>
-    <div class="flex h-full">
+    <div class="flex h-full w-screen">
         <div class="flex">
             <div :class="openDrawer ? 'open-drawer' : 'closed-drawer'" class="whitespace-nowrap max-sm:absolute md:max-w-[235px] bg-white border-r-2 border-gray-200 shadow-[5px_2px_10px_-2px_rgba(0,0,0,0.10)] z-10">
                 <ul class="flex flex-col p-3">
@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        <div class="p-6 h-full w-full flex justify-center">
+        <div class="p-6 h-full w-full flex flex-col items-center">
             <AccountSettings v-if="selected === 'cuenta'"/>
             <AccountPurchases v-if="selected === 'compras'"/>
             <AccountSales v-if="selected === 'ventas'"/>

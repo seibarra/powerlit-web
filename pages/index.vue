@@ -67,7 +67,7 @@
                     </v-btn>
                 </div>
             </v-card>
-            <v-carousel v-model="model2" :show-arrows="false" hide-delimiters>
+            <v-carousel v-model="model2" :show-arrows="false" hide-delimiters height="100%">
                 <v-carousel-item
                     v-for="(biodigestor, i) in biodigestores"
                     :key="i"

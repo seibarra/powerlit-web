@@ -1,9 +1,12 @@
 <template>
   <NuxtLayout name="navbar"></NuxtLayout>
 
-  <main class="w-screen">
-      <v-app class="flex flex-col max-w-[1920px] w-full items-center">
-        <NuxtPage />
+  <main class="w-screen h-full">
+      <v-app>
+        <div class="flex flex-col max-w-[1920px] w-full h-full items-center">
+
+          <NuxtPage />
+        </div>
       </v-app>
   </main>
 

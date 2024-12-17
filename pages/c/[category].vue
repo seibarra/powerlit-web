@@ -8,14 +8,14 @@
                         class="text-none px-5">
                         <div>
                             <p class="my-5">{{ category.name }}</p>
-                            <NuxtImg v-if="category.imageURL" :src="category.imageURL" class="m-auto h-20" width="50" :alt="category.name" />
+                            <NuxtImg :src="placeholderImages[index]" class="m-auto h-20 object-cover" width="50" :alt="category.name" />
                         </div>
                     </v-tab>
                 </v-tabs>
             </v-card>
         </header>
         <section 
-            class="md:px-6 sm:px-2"
+            class="md:px-6 sm:px-2 w-screen"
             v-if="productCategories.length > 0"
          >
             <header class="mb-5 w-full border-b border-gray-500">
@@ -47,6 +47,12 @@ watch(selected, () => {
         selectedChanged.value = true
     }
 })
+
+const placeholderImages = [
+    '/images/productos_powerlit/tanques/1000/tanque_1000_beige.avif',
+    '/images/productos_powerlit/biodigestores/biodigestor_autolimpiante_600.avif',
+    '/images/productos_powerlit/camaras_septicas/camara_septica_550.avif'
+]
 </script>
 
 <style scoped>
