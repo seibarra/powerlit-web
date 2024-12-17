@@ -1,7 +1,9 @@
 <template>
-    <div class="w-full">
-        <video src="/portada-powerlit.webm" autoplay muted width="100%"></video>
-    </div>
+    <ClientOnly>
+        <div class="w-full">
+            <video src="/portada-powerlit.webm" autoplay muted width="100%"></video>
+        </div>
+    </ClientOnly>
 
     <section class="max-xl:max-w-[100vw] lg:max-w-[1366px] mx-auto sm:px-6 max-sm:px-4">
         <section class="my-8">
