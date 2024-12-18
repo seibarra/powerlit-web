@@ -3,27 +3,23 @@
         <v-card 
         v-for="product, index in products"
         :key="index"
-        class="d-flex flex-column"
-        link
         @click="handleClickCard(product)"
         >
-            <div class="aspect-square flex justify-center items-center">
-                <NuxtImg :src="product.imagesURLs[0]" class="m-auto max-w-[100%] max-h-[100%]"></NuxtImg>
+        <div class="max-sm:flex">
+            <div class="aspect-square flex justify-center items-center max-sm:max-w-[130px] ">
+                <NuxtImg :src="product.imagesURLs[0]" class="m-auto max-w-[100%] max-h-[100%] w-full"></NuxtImg>
             </div>
 
-            <v-card-title class="pb-0 text-wrap">
-                {{ product.name }}
-            </v-card-title>
-            
-            <v-card-subtitle v-if="product.shortDescription">
-                {{ product.shortDescription }}
-            </v-card-subtitle>
-
-            <v-spacer></v-spacer>
-            
-            <v-card-actions>
-                <strong v-if="product.price" class="text-xl p-5">${{ product.price.toLocaleString('es-ES') }}</strong>
-            </v-card-actions>
+            <div class="text-wrap w-full p-3">
+                <h2 class="text-xl">
+                    {{ product.name }}
+                </h2>
+                
+                <small class="text-sm text-gray-400">
+                    {{ product.shortDescription }}
+                </small>
+            </div>
+        </div>
         </v-card>
     </div>
 </template>

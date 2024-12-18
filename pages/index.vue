@@ -1,7 +1,7 @@
 <template>
     <ClientOnly>
         <div class="w-full max-h-[600px] overflow-hidden">
-            <video src="/images/powerlit_banner.webm" autoplay muted width="100%"></video>
+            <video src="/images/powerlit_banner.webm" autoplay muted></video>
         </div>
     </ClientOnly>
 

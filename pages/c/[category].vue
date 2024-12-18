@@ -1,9 +1,11 @@
 <!-- Bento grid de tanques de agua -->
 <template>
     <section>
-        <header>
-            <v-card elevation="1">
-                <v-tabs show-arrows v-model="selected" align-tabs="center" class="tabs">
+        <header class="w-full mt-5">
+            
+            <!--
+            <v-card elevation="1" class="w-full">
+                <v-tabs v-model="selected" align-tabs="center" style="height: 145px;">
                     <v-tab v-for="category, index in productCategories" :key="index" :text="category.name" size="medium"
                         class="text-none px-5">
                         <div>
@@ -13,13 +15,27 @@
                     </v-tab>
                 </v-tabs>
             </v-card>
+            -->
+            
+            <div class="w-fit flex flex-wrap gap-5 justify-center mx-auto">
+                <v-card 
+                v-for="category, index in productCategories" :key="index" 
+                width="150" height="150"
+                class="text-center"
+                @click="selected = index"
+                >
+                    <h2 class="my-5">{{ category.name }}</h2>
+                    <NuxtImg :src="placeholderImages[index]" class="m-auto h-20 object-cover" width="50" :alt="category.name" />
+                </v-card>
+            </div>
+
         </header>
         <section 
-            class="md:px-6 sm:px-2 w-screen"
+            class="md:px-6 sm:px-2"
             v-if="productCategories.length > 0"
          >
-            <header class="mb-5 w-full border-b border-gray-500">
-                <h1 class="text-4xl p-3">{{ productCategories[selected].name }}</h1>
+            <header class="mb-5 border-b border-gray-500">
+                <h1 class="text-4xl p-3 text-wrap">{{ productCategories[selected].name }}</h1>
             </header>
             
             <ProductGrid :products="productsByCategory" />
@@ -53,10 +69,6 @@ const placeholderImages = [
 </script>
 
 <style scoped>
-.tabs {
-    height: 145px !important;
-}
-
 .ambar {
     background-color: rgb(255, 245, 230) !important;
 }
