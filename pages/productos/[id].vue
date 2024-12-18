@@ -24,7 +24,7 @@
                         <div class="text-3xl w-min">${{ formatPrice(product.price ?? 0) }}</div>
                         <button 
                         @click="userStore.addToCart(product.id, 1)"
-                        class="mt-4 text-xl text-center float-end text-white bg-blue-500 rounded-md hover:bg-blue-700 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium w-full sm:w-auto px-5 py-2.5">
+                        class="text-xl text-center text-white bg-blue-500 rounded-md hover:bg-blue-700 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium w-full sm:w-auto px-5 py-2.5">
                             Agregar al carrito
                         </button>
                 </div>

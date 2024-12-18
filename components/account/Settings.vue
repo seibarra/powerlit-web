@@ -25,7 +25,10 @@
               <v-text-field label="Código postal" variant="solo-filled" v-model="address.zip"></v-text-field>
               <v-text-field label="Calle" variant="solo-filled" v-model="address.street"></v-text-field>
             </div>
-            <v-btn color="green" variant="tonal" type="submit" :loading="loadingAddress">Guardar dirección</v-btn>
+            <div class="flex gap-5">
+              <v-btn color="green" variant="tonal" type="submit" :loading="loadingAddress" class="w-full" style="flex-shrink: initial;">Guardar dirección</v-btn>
+              <v-btn @click="userStore.deleteAddress(index)" color="red" variant="tonal" class="w-full" style="flex-shrink: initial;">Eliminar dirección</v-btn>
+            </div>
         </form>
 
         <v-btn @click="userStore.addEmptyAddress" class="my-5" color="primary" variant="tonal">Agregar nueva dirección</v-btn>

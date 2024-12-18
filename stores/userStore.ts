@@ -71,6 +71,15 @@ export const useUserStore = defineStore('userStore', () => {
         }
     }
 
+    async function deleteAddress(addressIndex: number) {
+        const supabase = useSupabaseClient()
+        const addressId = addresses.value[addressIndex].id
+        if (!addressId) return
+
+        await supabase.from('addresses').delete().eq('id', addressId)
+        addresses.value.splice(addressIndex, 1)
+    }
+
     function addToCart(productId: number, quantity: number) {
         const index = cart.value.findIndex((item) => item.productId === productId)
         if (index === -1) {
@@ -105,7 +114,8 @@ export const useUserStore = defineStore('userStore', () => {
         setQuantity,
         addresses,
         addEmptyAddress,
-        saveAddress
+        saveAddress,
+        deleteAddress
     }
 }, 
 {
