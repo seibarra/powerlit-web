@@ -1,7 +1,7 @@
 <template>
     <ClientOnly>
         <div class="w-full">
-            <video src="/portada-powerlit.webm" autoplay muted width="100%"></video>
+            <video src="/images/powerlit_banner.webm" autoplay muted width="100%"></video>
         </div>
     </ClientOnly>
 
