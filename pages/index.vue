@@ -7,7 +7,6 @@
 
     <section class="max-xl:max-w-[100vw] lg:max-w-[1366px] mx-auto sm:px-6 max-sm:px-4">
         <section class="my-8">
-            
             <v-card class="image-background" rounded="xl">
                 <h1 class="text-4xl p-6">Tanques de agua</h1>
                 
@@ -44,7 +43,7 @@
                                 Capa interior blanca, mayor resistencia al impacto, terminación extraigo para evitar adherencias, facilitando su limpieza.
                             </p>
 
-                            <v-btn class="text-none mt-3" color="#ffebc9ee">
+                            <v-btn to="/c/tanques-de-agua" class="text-none mt-3" color="#ffebc9ee">
                                 Ver más
                             </v-btn>
                         </div>
@@ -85,7 +84,7 @@
                                     {{ description }}
                                 </p>
 
-                                <v-btn class="text-none mt-3" color="#ffebc9ee">
+                                <v-btn to="/c/biodigestores" class="text-none mt-3" color="#ffebc9ee">
                                     Ver más
                                 </v-btn>
                             </div>
@@ -123,7 +122,7 @@
 
                         <p class="text-lg">Tamaños: 280, 400, 550 y 1000 litros.</p>
 
-                        <v-btn class="text-none mt-3" color="#ffebc9ee">
+                        <v-btn to="/c/cámaras-sépticas" class="text-none mt-3" color="#ffebc9ee">
                             Ver más
                         </v-btn>
                     </div>

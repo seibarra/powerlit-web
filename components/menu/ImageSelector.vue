@@ -33,7 +33,7 @@
             </v-card-text>
 
             <v-card-actions>
-                <v-btn color="primary">
+                <v-btn @click="handleSaveImages" color="green" variant="tonal">
                     Seleccionar
                 </v-btn>
             </v-card-actions>
@@ -42,6 +42,7 @@
 </template>
 
 <script setup lang="ts">
+const emit =defineEmits(['onSelectImages'])
 const model = ref(false)
 const images = getProductImagePaths()
 const selectedImages = ref<number[]>([])
@@ -64,5 +65,10 @@ function handleSelectImage(index: number) {
     } else {
         selectedImages.value.push(index)
     }
+}
+
+function handleSaveImages() {
+    emit('onSelectImages', selectedImages.value)
+    model.value = false
 }
 </script>

@@ -61,28 +61,21 @@
                     <v-text-field label="Precio" required type="number" v-model="price"></v-text-field>
                     <v-text-field label="Capacidad" type="number" v-model="capacity"></v-text-field>
 
-                    <menu-image-selector></menu-image-selector>
-
+                    <menu-image-selector @onSelectImages="selectedImagesByIndex = $event"></menu-image-selector>
                     
-                    <v-file-input v-model="images" :show-size="1000" color="deep-purple-accent-4"
-                        label="Imágenes del producto" placeholder="Selecciona las imágenes del producto"
-                        prepend-icon="mdi-camera" variant="outlined" counter multiple>
-                        <template v-slot:selection="{ fileNames }">
-                            <template v-for="(fileName, index) in fileNames" :key="fileName">
-                                <v-chip v-if="index < 2" class="me-2" color="deep-purple-accent-4" size="small" label>
-                                    {{ fileName }}
-                                </v-chip>
+                    <div v-if="selectedLocalImagesURLs.length > 0" class="flex gap-5 w-full my-4">
+                        <div 
+                        v-for="(image, index) in selectedLocalImagesURLs" :key="index" 
+                        class="border-2 border-slate-500 rounded-lg p-2 max-w-[90px] max-md:max-w-[60px] cursor-pointer hover:bg-slate-100 relative"
+                        draggable="true"
+                        @dragstart="onDragStart(index)"
+                        @dragover.prevent="onDragOver(index)"
+                        @dragend="onDragEnd"
+                        >
+                            <NuxtImg :src="image" width="270" class="mx-auto object-cover" />                            
+                        </div>
+                    </div>
 
-                                <span v-else-if="index === 2" class="text-overline text-grey-darken-3 mx-2">
-                                    +{{ images.length - 2 }} Imágenes
-                                </span>
-                            </template>
-                        </template>
-                        <template v-slot:counter>
-                            <span>{{ images.length }} imágenes seleccionadas ({{ filesSize }} KB)</span>
-                        </template>
-                    </v-file-input>
-                    
                     <small v-if="errorMessage" class="text-red-500">{{ errorMessage }}</small>
                 </v-card-text>
                 <v-divider></v-divider>
@@ -102,6 +95,7 @@
 </template>
 
 <script setup lang="ts">
+const localImages = getProductImagePaths()
 const supabase = useSupabaseClient()
 const userStore = useUserStore()
 const dialog = defineModel({ default: false, required: true })
@@ -122,8 +116,11 @@ const images = ref<File[]>([])
 const loading = ref(false)
 const errorMessage = ref('')
 const loadingData = ref(false)
+const selectedImagesByIndex = ref<number[]>([])
 
-const filesSize = computed(() => Math.round(images.value.reduce((acc, file) => acc + (file.size / 1024), 0)))
+
+const selectedLocalImagesURLs = computed(() => selectedImagesByIndex.value.map((index) => localImages[index]))
+// const filesSize = computed(() => Math.round(images.value.reduce((acc, file) => acc + (file.size / 1024), 0)))
 
 onMounted(async () => {
     loadingData.value = true
@@ -205,9 +202,9 @@ async function addProduct() {
     if (loading.value) return
     loading.value = true
 
-    const imagePaths = await uploadImages()
+    // const imagePaths = await uploadImages()
     
-    const imageURLs = imagePaths.map((path) => supabase.storage.from('products').getPublicUrl(path).data.publicUrl)
+    // const imageURLs = imagePaths.map((path) => supabase.storage.from('products').getPublicUrl(path).data.publicUrl)
 
     await createCategory()
     if (selectedTags.value.length > 0)
@@ -219,8 +216,8 @@ async function addProduct() {
         shortDescription: shortDescription.value,
         description: description.value,
         category: selectedCategory.value,
-        imagesURLs: imageURLs,
-        imagesPaths: imagePaths,
+        imagesURLs: selectedLocalImagesURLs.value,
+        imagesPaths: [],
         price: parseFloat(price.value),
         capacity: parseFloat(capacity.value),
         createdBy: {
@@ -249,5 +246,26 @@ async function addProduct() {
         dialog.value = false
     }
     loading.value = false
+}
+
+const draggedIndex = ref<number | null>(null);
+
+const onDragStart = (index: number) => {
+    draggedIndex.value = index;
+}
+
+const onDragEnd = () => {
+  draggedIndex.value = null; // Reset the dragged index when dragging ends
+}
+
+const onDragOver = (hoverIndex: number) => {
+      if (draggedIndex.value !== hoverIndex && draggedIndex.value !== null) {
+        const draggedImage = selectedImagesByIndex.value[draggedIndex.value]
+        if (draggedImage) {
+            selectedImagesByIndex.value.splice(draggedIndex.value, 1)
+            selectedImagesByIndex.value.splice(hoverIndex, 0, draggedImage)
+        }
+        draggedIndex.value = hoverIndex; // Update the dragged index
+      }
 }
 </script>

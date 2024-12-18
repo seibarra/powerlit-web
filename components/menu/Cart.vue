@@ -5,14 +5,14 @@
         </v-btn>
                         
         <v-menu activator="parent" v-model="cartModel" :close-on-content-click="false">
-            <v-card class="overflow-y-auto">
+            <v-card class="overflow-y-auto" max-width="580" width="100%">
                 <v-card-text>
                     <h2 class="text-2xl p-5 border-b border-gray-200">Mi carrito</h2>
                     <v-list max-height="410">
                         <v-list-item v-for="product in userStore.cart" :key="product.productId">
                             <div class="flex">
                                 <NuxtImg :src="productById(product.productId)?.imagesURLs[0]" class="w-24 h-24 rounded-md" />
-                                <div class="my-auto ml-3">
+                                <div class="my-auto ml-3 w-full">
                                     <h3 class="text-lg">{{ productById(product.productId)?.name ?? 'Producto eliminado' }}</h3>
                                     <p class="text-md">{{ productById(product.productId)?.shortDescription ?? '' }}</p>
                                     <div class="flex mt-2 justify-between">

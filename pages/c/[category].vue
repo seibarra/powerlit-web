@@ -28,9 +28,6 @@
 </template>
 
 <script setup lang="ts">
-import { useProductsStore } from '~/stores/producsStore'
-
-const route = useRoute()
 const { products, productCategories } = storeToRefs(useProductsStore())
 const selected = ref(0)
 const selectedChanged = ref(false)
